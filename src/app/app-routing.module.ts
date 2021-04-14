@@ -13,4 +13,14 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+
+    decodeClick() {
+        // this.sharedService.getDecodeBase64(this.FunctionName, this.RequestItem).subscribe(data=>{
+        //     this.Base64 = data;
+        //   });
+        // console.log(this.FunctionName);
+        // console.log(this.RequestItem);
+        // console.log(this.Base64);
+    }
+}

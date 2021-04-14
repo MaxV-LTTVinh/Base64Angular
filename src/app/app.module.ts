@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DecodeBase64Component } from './decode-base64/decode-base64.component';
 import { EncodeBase64Component } from './encode-base64/encode-base64.component';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,11 @@ import { EncodeBase64Component } from './encode-base64/encode-base64.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
