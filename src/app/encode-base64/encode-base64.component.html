@@ -1,14 +1,26 @@
-<div>
-    <div>
-      <input [(ngModel)]="FunctionName" type="text" />
-    </div>
-    <div>
-      <textarea [(ngModel)]="RequestItem" id="" cols="30" rows="10"></textarea>
-    </div>
-    <div>
-      <button (click)="encodeClick()">Encode</button>
-    </div>
-    <div>
-      <textarea [(ngModel)]="Base64" id="" cols="30" rows="10"></textarea>
-    </div>
+<div class="d-grid gap-3">
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Function Name</mat-label>
+      <input matInput [(ngModel)]="FunctionName" type="text" />
+    </mat-form-field>
   </div>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>RequestItem</mat-label>
+      <textarea matInput [(ngModel)]="RequestItem" rows="10"></textarea>
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-raised-button color="primary" (click)="encodeClick()">
+      Encode
+    </button>
+  </div>
+  <div>    
+    <mat-form-field class="example-full-width">
+        <mat-label>Base64</mat-label>
+        <textarea matInput [(ngModel)]="Base64" cols="30" rows="10"></textarea>
+    </mat-form-field>
+  </div>
+</div>
