@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Base64 } from '../Base64.model';
 import { SharedService } from '../shared.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-decode-base64',
@@ -13,15 +15,30 @@ export class DecodeBase64Component implements OnInit {
     FunctionName: string = "";
     RequestItem: string = "";
     Base64: string = "";
-
+    Base64LocalStorage: Base64[] = [];
     ngOnInit(): void {
+        this.Base64LocalStorage = this.sharedService.reloadBase64LocalStorage();
     }
-    decodeClick():void{
-        
-        this.sharedService.getDecodeBase64(this.Base64).subscribe(data=>{
-            console.log(data);
-            this.FunctionName = data.functionName;
-            this.RequestItem = data.requestItem;
-          });
+    copyInputMessage(inputElement : any){
+      inputElement.select();
+      document.execCommand('copy');
+      inputElement.setSelectionRange(0, 0);
+    }
+
+    decodeClick(): void {
+        if (this.Base64LocalStorage.find(x => x.base64 == this.Base64) == null)
+        {
+            this.sharedService.getDecodeBase64(this.Base64).subscribe(data => {
+                console.log(data);
+                this.FunctionName = data.functionName;
+                this.RequestItem = data.requestItem;
+            });
+        }
+
+        this.sharedService.saveCodeBase64ToLocalStorage(this.Base64, this.Base64LocalStorage);
+        this.Base64LocalStorage = this.sharedService.reloadBase64LocalStorage();
+    }
+    moment(dateTime, format): string {
+        return moment(dateTime).format(format);
     }
 }

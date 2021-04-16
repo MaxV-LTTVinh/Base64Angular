@@ -1,26 +1,74 @@
 <div class="d-grid gap-3">
-  <div>    
-    <mat-form-field class="example-full-width">
-        <mat-label>Base64</mat-label>
-        <textarea matInput [(ngModel)]="Base64" cols="30" rows="10"></textarea>
-    </mat-form-field>
-  </div>
+  <h2 class="text-center">Decode</h2>
   <div>
-    <button mat-raised-button color="primary" class="mce-i-aligncenter" (click)="decodeClick()">Decode</button>
-  </div>
-
-
-  <div>    
-  <mat-form-field class="example-full-width">
-    <mat-label>Function Name</mat-label>
-    <input matInput [(ngModel)]="FunctionName" name="FunctionName" type="text" >
-  </mat-form-field>
-  </div>
-
-  <div>    
     <mat-form-field class="example-full-width">
-        <mat-label>RequestItem</mat-label>
-        <textarea matInput [(ngModel)]="RequestItem" name="RequestItem" rows="10"></textarea>
+      <mat-label>Base64</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="Base64"
+        cols="30"
+        rows="10"
+        #base64text
+      ></textarea>
     </mat-form-field>
   </div>
+  <div style="width: 100%; position: relative;">
+    <button
+      mat-raised-button
+      color="primary"
+      class="mce-i-aligncenter"
+      (click)="decodeClick()"
+    >
+      Decode
+    </button>
+    <button
+    mat-raised-button
+    color="primary" style="right: 0px;position: absolute;"
+    class="mce-i-aligncenter" (click)="copyInputMessage(base64text)" value="click to copy">
+      Copy from Textbox
+    </button>
+  </div>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Function Name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="FunctionName"
+        name="FunctionName"
+        type="text"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <mat-label>RequestItem</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="RequestItem"
+        name="RequestItem"
+        rows="10"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <table class="table" *ngIf="Base64LocalStorage.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Base64 Code</th>
+        <th scope="col">Time Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let element of Base64LocalStorage; index as i; first as isFirst"
+      >
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ element.base64 }}</td>
+        <td>{{ moment(element.dateTime, "YYYY-MM-DD HH:mm:ss") }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

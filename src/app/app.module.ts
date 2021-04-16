@@ -12,6 +12,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+// import {MatTableDataSource} from '@angular/material/table';
+// import {MatPaginator} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatSliderModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatInputModule
+    MatInputModule,
+    // MatTableDataSource,
+    // MatPaginator,
   ],
   providers: [],
   bootstrap: [AppComponent]
