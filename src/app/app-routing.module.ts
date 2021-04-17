@@ -4,6 +4,7 @@ import { DecodeBase64Component } from './decode-base64/decode-base64.component';
 import { EncodeBase64Component } from './encode-base64/encode-base64.component';
 
 const routes: Routes = [
+{path:'',component:EncodeBase64Component},
 {path:'decode-base64',component:DecodeBase64Component},
 {path:'encode-base64',component:EncodeBase64Component},
 

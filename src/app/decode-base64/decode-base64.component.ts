@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Base64 } from '../Base64.model';
+import { Base64 } from '../model/Base64.model';
 import { SharedService } from '../shared.service';
 import * as moment from 'moment';
 
@@ -19,21 +19,24 @@ export class DecodeBase64Component implements OnInit {
     ngOnInit(): void {
         this.Base64LocalStorage = this.sharedService.reloadBase64LocalStorage();
     }
-    copyInputMessage(inputElement : any){
-      inputElement.select();
-      document.execCommand('copy');
-      inputElement.setSelectionRange(0, 0);
+    copyInputMessage(inputElement: any) {
+        inputElement.select();
+        document.execCommand('copy');
+        inputElement.setSelectionRange(0, 0);
     }
 
     decodeClick(): void {
-        if (this.Base64LocalStorage.find(x => x.base64 == this.Base64) == null)
-        {
-            this.sharedService.getDecodeBase64(this.Base64).subscribe(data => {
-                console.log(data);
-                this.FunctionName = data.functionName;
-                this.RequestItem = data.requestItem;
-            });
+
+        if (this.Base64 == "") {
+            this.sharedService.Notify("error", "Not be empty");
+            return;
         }
+
+        this.sharedService.getDecodeBase64(this.Base64).subscribe(data => {
+            console.log(data);
+            this.FunctionName = data.functionName;
+            this.RequestItem = data.requestItem;
+        });
 
         this.sharedService.saveCodeBase64ToLocalStorage(this.Base64, this.Base64LocalStorage);
         this.Base64LocalStorage = this.sharedService.reloadBase64LocalStorage();

@@ -3,9 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { BaseService } from './base.service';
-import { LambdaItem } from './lambdaItem.model';
-import { Base64 } from './Base64.model';
+import { Base64 } from './model/Base64.model';
 import * as moment from 'moment';
+import { AppConfig } from './model/AppConfig.model';
+import { AppConfigService } from './services/app-config.service';
+import { ToastrService } from 'ngx-toastr';
+import { LambdaItem } from './model/LambdaItem.model';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -19,22 +22,43 @@ const httpOptions = {
 })
 export class SharedService extends BaseService {
     private _sharedHeaders = new HttpHeaders();
-    constructor(private http: HttpClient) {
+    private _apiUrl: string = "";
+    constructor(private http: HttpClient, private appConfigService: AppConfigService, private toastr: ToastrService) {
         super();
-        this._sharedHeaders = this._sharedHeaders.set('Content-Type', 'application/json');
+        this._sharedHeaders = this._sharedHeaders.set('Content-Type', 'application/json'); 4
+        this._apiUrl = appConfigService.apiUrl
+
     }
 
-    readonly APIUrl = "http://localhost/Api";
+    public Notify(status: string, message: string) {
+        switch (status) {
+            case "success":
+                this.toastr.success(message);
+                break;
+            case "error":
+                this.toastr.error(message);
+                break;
+            case "info":
+                this.toastr.info(message);
+                break;
+            case "warning":
+                this.toastr.warning(message);
+                break;
+            default:
+                this.toastr.success(message);
+                break;
+        }
+    }
 
     getDepList(): Observable<any[]> {
-        return this.http.get<any>(this.APIUrl + '/WeatherForecast');
+        return this.http.get<any>(this._apiUrl + '/WeatherForecast');
     }
     getEncodeBase64(functionName: string, requestItem: string): Observable<Base64> {
-        const url = `${this.APIUrl}/Base64/Encode/${functionName}/${requestItem}`;
+        const url = `${this._apiUrl}/Base64/Encode/${functionName}/${requestItem}`;
         return this.http.get<Base64>(url);
     }
     getDecodeBase64(base64: string): Observable<LambdaItem> {
-        const url = `${this.APIUrl}/Base64/Decode/${base64}`;
+        const url = `${this._apiUrl}/Base64/Decode/${base64}`;
         return this.http.get<LambdaItem>(url);
     }
     saveCodeBase64ToLocalStorage(base64Code: string, base64LocalStorage: Base64[]) {
